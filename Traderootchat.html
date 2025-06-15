@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            width: 80%;
+            max-width: 1200px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 25%;
+            background-color: #f9f9f9;
+            border-right: 1px solid #ddd;
+            padding: 16px;
+        }
+
+        .sidebar h3 {
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: #555;
+        }
+
+        .contact {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .contact:hover {
+            background-color: #ececec;
+        }
+
+        .contact-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #ccc;
+            border-radius: 50%;
+            margin-right: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .contact-info {
+            flex-grow: 1;
+        }
+
+        .contact-info span {
+            display: block;
+            font-size: 14px;
+        }
+
+        .contact-info span.name {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .contact-info span.status {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .chat-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 16px;
+            border-bottom: 1px solid #ddd;
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 16px;
+            overflow-y: auto;
+            background-color: #fafafa;
+        }
+
+        .message {
+            margin-bottom: 16px;
+        }
+
+        .message .sender {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .message .text {
+            margin-top: 4px;
+            font-size: 14px;
+            color: #555;
+            background-color: #e6e6e6;
+            padding: 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .message.sent .text {
+            background-color: #d1f7d6;
+            align-self: flex-end;
+        }
+
+        .chat-input {
+            padding: 16px;
+            border-top: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .chat-input button {
+            padding: 10px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .chat-input button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h3>Professional Contacts</h3>
+            <div class="contact" onclick="loadChat('johnDoe')">
+                <div class="contact-avatar">J</div>
+                <div class="contact-info">
+                    <span class="name">John Doe</span>
+                    <span class="status">Plumber - Online</span>
+                </div>
+            </div>
+            <div class="contact" onclick="loadChat('mikeJohnson')">
+                <div class="contact-avatar">M</div>
+                <div class="contact-info">
+                    <span class="name">Mike Johnson</span>
+                    <span class="status">Plumber - Busy</span>
+                </div>
+            </div>
+            <div class="contact" onclick="loadChat('sarahWilliams')">
+                <div class="contact-avatar">S</div>
+                <div class="contact-info">
+                    <span class="name">Sarah Williams</span>
+                    <span class="status">Gardener - Available</span>
+                </div>
+            </div>
+        </div>
+        <div class="chat-area">
+            <div class="chat-header" id="chatHeader">John Doe</div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message">
+                    <span class="sender">John Doe</span>
+                    <div class="text">Hi there! I understand you’re having some plumbing issues. Can you describe what’s happening?</div>
+                </div>
+                <div class="message sent">
+                    <span class="sender">You</span>
+                    <div class="text">Yes, I have a leaky faucet in my kitchen. It’s been dripping constantly for about two days now.</div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Type a message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chats = {
+            johnDoe: [
+                { sender: "John Doe", text: "Hi there! I understand you’re having some plumbing issues. Can you describe what’s happening?" },
+                { sender: "You", text: "Yes, I have a leaky faucet in my kitchen. It’s been dripping constantly for about two days now." }
+            ],
+            mikeJohnson: [
+                { sender: "Mike Johnson", text: "I can assist tomorrow. Is that okay?" }
+            ],
+            sarahWilliams: [
+                { sender: "Sarah Williams", text: "Hi! I can help with lawn care. Are you interested in exchanging services?" }
+            ]
+        };
+
+        function loadChat(contact) {
+            const chatMessages = document.getElementById("chatMessages");
+            const chatHeader = document.getElementById("chatHeader");
+
+            chatMessages.innerHTML = "";
+
+            chats[contact].forEach(chat => {
+                const message = document.createElement("div");
+                message.classList.add("message");
+                if (chat.sender === "You") {
+                    message.classList.add("sent");
+                }
+
+                const sender = document.createElement("span");
+                sender.classList.add("sender");
+                sender.textContent = chat.sender;
+
+                const text = document.createElement("div");
+                text.classList.add("text");
+                text.textContent = chat.text;
+
+                message.appendChild(sender);
+                message.appendChild(text);
+                chatMessages.appendChild(message);
+            });
+
+            chatHeader.textContent = contact.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+        }
+
+        function sendMessage() {
+            const chatMessages = document.getElementById('chatMessages');
+            const chatInput = document.getElementById('chatInput');
+            const messageText = chatInput.value.trim();
+
+            if (messageText) {
+                const message = document.createElement('div');
+                message.classList.add('message', 'sent');
+
+                const sender = document.createElement('span');
+                sender.classList.add('sender');
+                sender.textContent = 'You';
+
+                const text = document.createElement('div');
+                text.classList.add('text');
+                text.textContent = messageText;
+
+                message.appendChild(sender);
+                message.appendChild(text);
+                chatMessages.appendChild(message);
+
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                chatInput.value = '';
+            }
+        }
+
+        // Load the initial chat
+        loadChat('johnDoe');
+    </script>
+</body>
+</html>

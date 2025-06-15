@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Skills Exchange</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .search-bar input, .search-bar select {
+            padding: 0.5rem;
+            font-size: 1rem;
+            flex: 1;
+        }
+        .search-bar button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-info {
+            max-width: 70%;
+        }
+        .card h3 {
+            margin: 0;
+        }
+        .card p {
+            margin: 0.5rem 0;
+            color: #555;
+        }
+        .card button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Find Skills in Your Community</h1>
+    </header>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search skills...">
+            <select id="filter">
+                <option value="">All Categories</option>
+                <option value="Home and Lifestyle">Home and Lifestyle</option>
+                <option value="Technical Skills">Technical Skills</option>
+                <option value="Creative and Artistic">Creative and Artistic</option>
+                <option value="Educational and Professional">Educational and Professional</option>
+                <option value="Health and Fitness">Health and Fitness</option>
+                <option value="Mechanical and Technical Trades">Mechanical and Technical Trades</option>
+                <option value="Community Engagement">Community Engagement</option>
+                <option value="Miscellaneous">Miscellaneous</option>
+            </select>
+            <button onclick="searchSkills()">Search</button>
+        </div>
+        <div id="results">
+            <div class="card">
+                <div class="card-info">
+                    <h3>John Doe</h3>
+                    <p>Gardening Expert - Specializing in organic vegetable gardens, native plants, and sustainable landscaping. 10+ years of experience.</p>
+                    <p>Rating: ★★★★★ (47 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>Maria Smith</h3>
+                    <p>Urban Gardener - Specializing in small space gardening, container gardens, and edible landscaping. Perfect for apartments and small yards.</p>
+                    <p>Rating: ★★★★☆ (23 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>Robert Johnson</h3>
+                    <p>Landscape Designer - Focusing on drought-resistant landscaping, garden design, and outdoor living spaces. Can help with planning and layout.</p>
+                    <p>Rating: ★★★★☆ (12 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>Alice Wong</h3>
+                    <p>Master Gardener - Certified Master Gardener with expertise in vegetable gardening, fruit trees, and garden troubleshooting. Can help transform your yard.</p>
+                    <p>Rating: ★★★★★ (31 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>Tom Garcia</h3>
+                    <p>Permaculture Specialist - Experienced in permaculture design, food forests, and sustainable gardening systems. Can help create low maintenance gardens.</p>
+                    <p>Rating: ★★★★☆ (19 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>Jessica Taylor</h3>
+                    <p>Handyman Services - Plumbing, electrical work, carpentry, painting, and general home repairs. Reliable and affordable.</p>
+                    <p>Rating: ★★★★★ (56 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>Michael Lee</h3>
+                    <p>Technology Help - Troubleshooting devices, setting up smart systems, and teaching coding basics for beginners.</p>
+                    <p>Rating: ★★★★☆ (42 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>Susan Carter</h3>
+                    <p>Graphic Designer - Expert in logo creation, website design, and branding. 8+ years of experience.</p>
+                    <p>Rating: ★★★★★ (39 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>David Brown</h3>
+                    <p>Video Editor - Specializing in editing family videos, photos, and creating montages for special occasions.</p>
+                    <p>Rating: ★★★★☆ (27 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>Emily Green</h3>
+                    <p>Photography - Event photography, portraits, and teaching photography skills. Professional and creative.</p>
+                    <p>Rating: ★★★★★ (50 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <!-- Add 15 more people with diverse skillsets below -->
+        </div>
+    </div>
+    <script>
+        function searchSkills() {
+            const searchInput = document.getElementById('search').value.toLowerCase();
+            const filterInput = document.getElementById('filter').value;
+            const results = document.getElementById('results');
+            const cards = results.getElementsByClassName('card');
+
+            Array.from(cards).forEach(card => {
+                const info = card.getElementsByClassName('card-info')[0].innerText.toLowerCase();
+                if (info.includes(searchInput) && (filterInput === '' || info.includes(filterInput.toLowerCase()))) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

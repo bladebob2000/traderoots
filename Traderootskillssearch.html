@@ -85,9 +85,17 @@
                 <option value="Creative and Artistic">Creative and Artistic</option>
                 <option value="Educational and Professional">Educational and Professional</option>
                 <option value="Health and Fitness">Health and Fitness</option>
-                <option value="Mechanical and Technical Trades">Mechanical and Technical Trades</option>
+                <option value="Mechanical and Technical">Mechanical and Technical</option>
                 <option value="Community Engagement">Community Engagement</option>
                 <option value="Miscellaneous">Miscellaneous</option>
+            </select>
+            <select id="rating-filter">
+                <option value="">All Ratings</option>
+                <option value="5">★★★★★</option>
+                <option value="4">★★★★☆ & Up</option>
+                <option value="3">★★★☆☆ & Up</option>
+                <option value="2">★★☆☆☆ & Up</option>
+                <option value="1">★☆☆☆☆ & Up</option>
             </select>
             <button onclick="searchSkills()">Search</button>
         </div>
@@ -172,19 +180,82 @@
                 </div>
                 <button>Connect</button>
             </div>
-            <!-- Add 15 more people with diverse skillsets below -->
+            <div class="card">
+                <div class="card-info">
+                    <h3>Kevin Turner</h3>
+                    <p>Personal Trainer - Offering workout routines, yoga sessions, and personalized fitness coaching.</p>
+                    <p>Rating: ★★★★☆ (35 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>Linda White</h3>
+                    <p>Nutritionist - Provides meal planning, dietary advice, and health-focused nutrition consultations.</p>
+                    <p>Rating: ★★★★★ (44 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>Steve Harris</h3>
+                    <p>Mechanic - Experienced in vehicle maintenance, basic repairs, and oil changes for cars and bikes.</p>
+                    <p>Rating: ★★★★☆ (31 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>Laura Parker</h3>
+                    <p>Childcare Expert - Babysitting, tutoring, and teaching creative skills to children of all ages.</p>
+                    <p>Rating: ★★★★★ (60 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>George Mason</h3>
+                    <p>Event Planner - Organizing parties, community events, and providing creative decoration solutions.</p>
+                    <p>Rating: ★★★★☆ (25 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>Paul Martin</h3>
+                    <p>Public Speaker - Coaching individuals for events, presentations, and workshops.</p>
+                    <p>Rating: ★★★★★ (33 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
+            <div class="card">
+                <div class="card-info">
+                    <h3>Samantha Clark</h3>
+                    <p>Fashion Stylist - Personal shopping, styling outfits, and providing wardrobe organization tips.</p>
+                    <p>Rating: ★★★★★ (29 reviews)</p>
+                </div>
+                <button>Connect</button>
+            </div>
         </div>
     </div>
     <script>
         function searchSkills() {
-            const searchInput = document.getElementById('search').value.toLowerCase();
+            const searchInput = document.getElementById('search').value.toLowerCase().trim();
             const filterInput = document.getElementById('filter').value;
+            const ratingFilter = document.getElementById('rating-filter').value;
             const results = document.getElementById('results');
             const cards = results.getElementsByClassName('card');
 
             Array.from(cards).forEach(card => {
                 const info = card.getElementsByClassName('card-info')[0].innerText.toLowerCase();
-                if (info.includes(searchInput) && (filterInput === '' || info.includes(filterInput.toLowerCase()))) {
+                const ratingText = info.match(/Rating: (★{1,5})/);
+                const rating = ratingText ? ratingText[1].length : 0;
+
+                const matchesSearch = !searchInput || info.includes(searchInput);
+                const matchesFilter = !filterInput || info.includes(filterInput.toLowerCase());
+                const matchesRating = !ratingFilter || rating >= parseInt(ratingFilter);
+
+                if (matchesSearch && matchesFilter && matchesRating) {
                     card.style.display = 'flex';
                 } else {
                     card.style.display = 'none';

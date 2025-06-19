@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar {
+            width: 20%;
+            float: left;
+            border-right: 1px solid #ddd;
+            padding-right: 1rem;
+        }
+        .sidebar h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 0.5rem 0;
+        }
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .main-content {
+            width: 75%;
+            float: right;
+        }
+        .section {
+            margin-bottom: 2rem;
+        }
+        .section h2 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-group button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+        }
+        .toggle-switch input {
+            margin-left: 0.5rem;
+        }
+        footer {
+            clear: both;
+            text-align: center;
+            padding: 1rem 0;
+            background-color: #4CAF50;
+            color: white;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Settings</h1>
+    </header>
+    <div class="container">
+        <div class="sidebar">
+            <h3>Settings</h3>
+            <ul>
+                <li><a href="#account">Your Account</a></li>
+                <li><a href="#privacy">Privacy</a></li>
+                <li><a href="#bookmarks">Bookmarks</a></li>
+                <li><a href="#messages">Messages</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="section" id="account">
+                <h2>Your Account</h2>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter new username">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter new email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter new password">
+                </div>
+                <button>Log Out</button>
+            </div>
+            <div class="section" id="privacy">
+                <h2>Privacy</h2>
+                <div class="form-group toggle-switch">
+                    <label for="activity">Show Activity Logs</label>
+                    <input type="checkbox" id="activity">
+                </div>
+                <div class="form-group">
+                    <label for="visibility">Who Can View Your Account</label>
+                    <select id="visibility">
+                        <option value="public">Public</option>
+                        <option value="connections">Connections Only</option>
+                        <option value="private">Only Me</option>
+                    </select>
+                </div>
+                <div class="form-group toggle-switch">
+                    <label for="suggestions">Suggest Your Account to Others</label>
+                    <input type="checkbox" id="suggestions">
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        &copy; 2025 Community Skills Exchange
+    </footer>
+</body>
+</html>

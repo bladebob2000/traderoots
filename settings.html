@@ -98,6 +98,7 @@
           <button class="btn btn-outline-primary">Change Email</button><br>
           <button class="btn btn-outline-primary">Change Phone Number</button><br>
           <button class="btn btn-outline-primary">Change Username</button><br>
+          <button id="signOutBtn" class="btn btn-outline-primary">Sign Out</button><br>
           <button class="btn btn-outline-danger">Delete Account</button>
         </div>
         <div class="tab-pane fade" id="privacy" role="tabpanel">
@@ -166,6 +167,27 @@
         document.getElementById('footer').innerHTML = html;
       });
   </script>
+
+  <script type="module">
+    import { auth } from './firebase-config.js';
+    import { signOut } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+  
+    document.addEventListener('DOMContentLoaded', () => {
+      const signOutBtn = document.querySelector('#signOutBtn');
+  
+      if (signOutBtn) {
+        signOutBtn.addEventListener('click', () => {
+          signOut(auth).then(() => {
+            console.log("Signed out successfully");
+            window.location.href = "sign_in.html"; // redirect to sign-in page
+          }).catch((error) => {
+            console.error("Sign-out error:", error);
+          });
+        });
+      }
+    });
+  </script>
+  
 
 </body>
 

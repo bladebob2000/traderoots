@@ -3,9 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// Optional: Only include if you're actually using analytics
-// import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
-
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBBID6kUONp-bHIuQC24cvCLHYQ9cWIel0",
   authDomain: "traderoots-9a940.firebaseapp.com",
@@ -18,11 +16,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider(); // ✅ required for Google Sign-In
 
-// Export services for use in other modules
-export const auth = getAuth(app);
-export const provider = new GoogleAuthProvider();
-export const db = getFirestore(app);
-
-// Optional: Uncomment if you're actually using analytics
-// const analytics = getAnalytics(app);
+export { auth, db, provider };

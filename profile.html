@@ -98,7 +98,7 @@
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Modal for Skill Info -->
   <div class="modal fade" id="skillModal" tabindex="-1" aria-labelledby="skillModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -140,19 +140,72 @@
             <label class="form-label">Availability</label>
             <fieldset class="col-12 border p-3">
               <legend class="float-none w-auto">Weekly Availability</legend>
-              <div class="row g-2">
-                ${["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(day => `
+              <div class="row g-2" style="max-height: 250px; overflow-y: auto;">
+                <!-- Monday -->
                 <div class="col-12 d-flex align-items-center">
-                  <input type="checkbox" id="${day}-check" class="form-check-input me-2" />
-                  <label class="form-label me-2" style="width: 80px;">${day}</label>
-                  <input type="time" id="${day}-start" class="form-control me-2" style="width: 140px;" disabled />
+                  <input type="checkbox" id="Monday-check" class="form-check-input me-2" />
+                  <label class="form-label me-2" style="width: 80px;">Monday</label>
+                  <input type="time" id="Monday-start" class="form-control me-2" style="width: 140px;" disabled />
                   <span class="me-2">to</span>
-                  <input type="time" id="${day}-end" class="form-control" style="width: 140px;" disabled />
+                  <input type="time" id="Monday-end" class="form-control" style="width: 140px;" disabled />
                 </div>
-                `).join("")}
+              
+                <!-- Tuesday -->
+                <div class="col-12 d-flex align-items-center">
+                  <input type="checkbox" id="Tuesday-check" class="form-check-input me-2" />
+                  <label class="form-label me-2" style="width: 80px;">Tuesday</label>
+                  <input type="time" id="Tuesday-start" class="form-control me-2" style="width: 140px;" disabled />
+                  <span class="me-2">to</span>
+                  <input type="time" id="Tuesday-end" class="form-control" style="width: 140px;" disabled />
+                </div>
+              
+                <!-- Wednesday -->
+                <div class="col-12 d-flex align-items-center">
+                  <input type="checkbox" id="Wednesday-check" class="form-check-input me-2" />
+                  <label class="form-label me-2" style="width: 80px;">Wednesday</label>
+                  <input type="time" id="Wednesday-start" class="form-control me-2" style="width: 140px;" disabled />
+                  <span class="me-2">to</span>
+                  <input type="time" id="Wednesday-end" class="form-control" style="width: 140px;" disabled />
+                </div>
+              
+                <!-- Thursday -->
+                <div class="col-12 d-flex align-items-center">
+                  <input type="checkbox" id="Thursday-check" class="form-check-input me-2" />
+                  <label class="form-label me-2" style="width: 80px;">Thursday</label>
+                  <input type="time" id="Thursday-start" class="form-control me-2" style="width: 140px;" disabled />
+                  <span class="me-2">to</span>
+                  <input type="time" id="Thursday-end" class="form-control" style="width: 140px;" disabled />
+                </div>
+              
+                <!-- Friday -->
+                <div class="col-12 d-flex align-items-center">
+                  <input type="checkbox" id="Friday-check" class="form-check-input me-2" />
+                  <label class="form-label me-2" style="width: 80px;">Friday</label>
+                  <input type="time" id="Friday-start" class="form-control me-2" style="width: 140px;" disabled />
+                  <span class="me-2">to</span>
+                  <input type="time" id="Friday-end" class="form-control" style="width: 140px;" disabled />
+                </div>
+              
+                <!-- Saturday -->
+                <div class="col-12 d-flex align-items-center">
+                  <input type="checkbox" id="Saturday-check" class="form-check-input me-2" />
+                  <label class="form-label me-2" style="width: 80px;">Saturday</label>
+                  <input type="time" id="Saturday-start" class="form-control me-2" style="width: 140px;" disabled />
+                  <span class="me-2">to</span>
+                  <input type="time" id="Saturday-end" class="form-control" style="width: 140px;" disabled />
+                </div>
+              
+                <!-- Sunday -->
+                <div class="col-12 d-flex align-items-center">
+                  <input type="checkbox" id="Sunday-check" class="form-check-input me-2" />
+                  <label class="form-label me-2" style="width: 80px;">Sunday</label>
+                  <input type="time" id="Sunday-start" class="form-control me-2" style="width: 140px;" disabled />
+                  <span class="me-2">to</span>
+                  <input type="time" id="Sunday-end" class="form-control" style="width: 140px;" disabled />
+                </div>
               </div>
+              
             </fieldset>
-
           </div>
         </div>
         <div class="modal-footer">
@@ -162,16 +215,13 @@
     </div>
   </div>
 
-
   <div id="footer"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="firebase-config.js"></script>
   <script type="module">
     import { auth, db } from './firebase-config.js';
-    import {
-      doc, getDoc, updateDoc
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
     const userNameEl = document.getElementById("user-name");
@@ -189,24 +239,24 @@
     const editLast = document.getElementById("edit-last");
     const editLocation = document.getElementById("edit-location");
     const editBio = document.getElementById("edit-bio");
-    const editAvailability = document.getElementById("edit-availability");
 
     const availabilityInputs = {};
 
-    ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].forEach(day => {
-      const check = document.getElementById(`${day}-check`);
-      const start = document.getElementById(`${day}-start`);
-      const end = document.getElementById(`${day}-end`);
-
-      availabilityInputs[day] = { check, start, end };
-
-      check.addEventListener("change", () => {
-        const enabled = check.checked;
-        start.disabled = !enabled;
-        end.disabled = !enabled;
+    document.getElementById('editProfileModal').addEventListener('shown.bs.modal', () => {
+      ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].forEach(day => {
+        const check = document.getElementById(`${day}-check`);
+        const start = document.getElementById(`${day}-start`);
+        const end = document.getElementById(`${day}-end`);
+        if (check && start && end) {
+          availabilityInputs[day] = { check, start, end };
+          check.addEventListener("change", () => {
+            const enabled = check.checked;
+            start.disabled = !enabled;
+            end.disabled = !enabled;
+          });
+        }
       });
     });
-
 
     let currentUserId = null;
 
@@ -222,26 +272,18 @@
       userNameEl.textContent = `${data.firstName} ${data.lastName}`;
       userLocationEl.textContent = data.location?.city || data.location || '—';
       userBioEl.textContent = data.bio || '—';
-      userAvailabilityEl.textContent = data.availability || '—';
 
-      // Fill form
+      if (data.availability && typeof data.availability === 'object') {
+        const readable = Object.entries(data.availability).map(([day, { start, end }]) => `${day}: ${start} - ${end}`);
+        userAvailabilityEl.textContent = readable.join(", ");
+      } else {
+        userAvailabilityEl.textContent = '—';
+      }
+
       editFirst.value = data.firstName || '';
       editLast.value = data.lastName || '';
       editLocation.value = data.location?.city || data.location || '';
       editBio.value = data.bio || '';
-      if (data.availability && typeof data.availability === 'object') {
-        for (const [day, slot] of Object.entries(data.availability)) {
-          const inputs = availabilityInputs[day];
-          if (inputs) {
-            inputs.check.checked = true;
-            inputs.start.disabled = false;
-            inputs.end.disabled = false;
-            inputs.start.value = slot.start || '';
-            inputs.end.value = slot.end || '';
-          }
-        }
-      }
-
 
       // Skills
       skillsList.innerHTML = '';
@@ -262,7 +304,6 @@
 
     editForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-
       const updateData = {
         firstName: editFirst.value.trim(),
         lastName: editLast.value.trim(),
@@ -273,23 +314,19 @@
             .filter(([_, { check }]) => check.checked)
             .map(([day, { start, end }]) => [day, { start: start.value, end: end.value }])
         )
-
       };
 
       try {
         await updateDoc(doc(db, "users", currentUserId), updateData);
-        location.reload(); // reload page with updated data
+        location.reload();
       } catch (err) {
         alert("Error updating profile: " + err.message);
       }
     });
 
-
     fetch("footer.html")
       .then(res => res.text())
       .then(html => (document.getElementById("footer").innerHTML = html));
-
-
   </script>
 </body>
 

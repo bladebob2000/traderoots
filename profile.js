@@ -46,7 +46,6 @@ addSkillBtn.addEventListener('click', () => {
   skillsSection.appendChild(row);
 });
 
-
 profileForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -57,13 +56,27 @@ profileForm.addEventListener('submit', async (e) => {
     lastName: document.getElementById('lastName').value,
     location: document.getElementById('location').value || null,
     bio: document.getElementById('bio').value || null,
-    availability: document.getElementById('availability').value || null,
+    availability: {},
     skills: []
   };
 
+  // Collect availability
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  days.forEach(day => {
+    const check = document.getElementById(`${day}-check`);
+    const start = document.getElementById(`${day}-start`);
+    const end = document.getElementById(`${day}-end`);
+    if (check && check.checked && start && end) {
+      profileData.availability[day] = {
+        start: start.value,
+        end: end.value
+      };
+    }
+  });
+
+  // Collect skills
   const skillNames = document.querySelectorAll('.skill-name');
   const skillDescs = document.querySelectorAll('.skill-desc');
-
   for (let i = 0; i < skillNames.length; i++) {
     const name = skillNames[i].value.trim();
     const desc = skillDescs[i].value.trim();
@@ -77,7 +90,7 @@ profileForm.addEventListener('submit', async (e) => {
     successMsg.textContent = "Profile saved successfully!";
     errorMsg.textContent = "";
     setTimeout(() => {
-      window.location.href = "profile.html"; // or any profile display page
+      window.location.href = "profile.html";
     }, 1000);
   } catch (err) {
     errorMsg.textContent = err.message;

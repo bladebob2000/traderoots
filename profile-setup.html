@@ -1,33 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title>Profile Setup</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile Setup | TradeRoots</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #4CAF50, #F0F4C3);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    .profile-container {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      max-width: 600px;
+      width: 100%;
+      padding: 2rem;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h2 {
+      color: #198754;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .btn-success {
+      width: 100%;
+    }
+
+    .skill-entry {
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 40px 0;
+    }
+
+    #error-message,
+    #success-message {
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    #error-message {
+      color: red;
+    }
+
+    #success-message {
+      color: green;
+    }
+  </style>
 </head>
+
 <body>
-  <h2>Complete Your Profile</h2>
-  <form id="profile-form">
-    <input type="text" id="firstName" placeholder="First Name" required><br>
-    <input type="text" id="lastName" placeholder="Last Name" required><br>
-    <input type="text" id="location" placeholder="Location (optional)"><br>
-    <textarea id="bio" placeholder="Short Bio (optional)"></textarea><br>
-    <input type="text" id="availability" placeholder="Timings / Availability (optional)"><br>
 
-    <h4>Skills (optional)</h4>
-    <div id="skills-section">
-      <div class="skill-entry">
-        <input type="text" class="skill-name" placeholder="Skill">
-        <input type="text" class="skill-desc" placeholder="Description of experience">
-      </div>
+  <div class="profile-container">
+    <div class="card bg-white">
+      <h2>Set Up Your Profile</h2>
+      <form id="profile-form">
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="firstName" required />
+        </div>
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="lastName" required />
+        </div>
+        <div class="mb-3">
+          <label for="location" class="form-label">Location (optional)</label>
+          <input type="text" class="form-control" id="location" />
+        </div>
+        <div class="mb-3">
+          <label for="bio" class="form-label">Short Bio (optional)</label>
+          <textarea class="form-control" id="bio" rows="2"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="availability" class="form-label">Timings / Availability (optional)</label>
+          <input type="text" class="form-control" id="availability" />
+        </div>
+
+        <h5>Skills (optional)</h5>
+        <div id="skills-section" class="mb-3">
+          <div class="skill-entry row g-2">
+            <div class="col-md-6">
+              <input type="text" class="form-control skill-name" placeholder="Skill" />
+            </div>
+            <div class="col-md-6">
+              <input type="text" class="form-control skill-desc" placeholder="Description of experience" />
+            </div>
+          </div>
+        </div>
+        <button type="button" id="add-skill" class="btn btn-outline-secondary mb-3 w-100">+ Add Another Skill</button>
+
+        <button type="submit" class="btn btn-success mb-2">Save Profile</button>
+
+        <p id="error-message"></p>
+        <p id="success-message"></p>
+      </form>
     </div>
-    <button type="button" id="add-skill">+ Add Another Skill</button><br><br>
+  </div>
 
-    <button type="submit">Save Profile</button>
-  </form>
+  <!-- Footer -->
+  <div id="footer"></div>
 
-  <p id="error-message" style="color:red;"></p>
-  <p id="success-message" style="color:green;"></p>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="firebase-config.js"></script>
   <script type="module" src="profile.js"></script>
+  <script>
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
+      });
+  </script>
 </body>
+
 </html>

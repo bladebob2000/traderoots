@@ -16,19 +16,36 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     currentUserId = user.uid;
   } else {
-    window.location.href = 'index.html'; // redirect to sign-up if not logged in
+    window.location.href = 'sign_up.html'; // redirect to sign-up if not logged in
   }
 });
 
 addSkillBtn.addEventListener('click', () => {
-  const div = document.createElement('div');
-  div.classList.add('skill-entry');
-  div.innerHTML = `
-    <input type="text" class="skill-name" placeholder="Skill">
-    <input type="text" class="skill-desc" placeholder="Description of experience">
-  `;
-  skillsSection.appendChild(div);
+  const row = document.createElement('div');
+  row.className = 'skill-entry row g-2';
+
+  const col1 = document.createElement('div');
+  col1.className = 'col-md-6';
+  const skillInput = document.createElement('input');
+  skillInput.type = 'text';
+  skillInput.className = 'form-control skill-name';
+  skillInput.placeholder = 'Skill';
+  col1.appendChild(skillInput);
+
+  const col2 = document.createElement('div');
+  col2.className = 'col-md-6';
+  const descInput = document.createElement('input');
+  descInput.type = 'text';
+  descInput.className = 'form-control skill-desc';
+  descInput.placeholder = 'Description of experience';
+  col2.appendChild(descInput);
+
+  row.appendChild(col1);
+  row.appendChild(col2);
+
+  skillsSection.appendChild(row);
 });
+
 
 profileForm.addEventListener('submit', async (e) => {
   e.preventDefault();

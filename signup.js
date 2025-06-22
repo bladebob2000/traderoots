@@ -1,69 +1,33 @@
-// profile.js
-import { auth, db } from './firebase-config.js';
-import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+// signup.js
+import { auth, provider } from './firebase-config.js';
+import { createUserWithEmailAndPassword, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-const profileForm = document.getElementById('profile-form');
-const addSkillBtn = document.getElementById('add-skill');
-const skillsSection = document.getElementById('skills-section');
-const errorMsg = document.getElementById('error-message');
-const successMsg = document.getElementById('success-message');
-
-let currentUserId = null;
-
-// Make sure user is logged in
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    currentUserId = user.uid;
-  } else {
-    window.location.href = 'index.html'; // redirect if not signed in
-  }
-});
-
-addSkillBtn.addEventListener('click', () => {
-  const div = document.createElement('div');
-  div.classList.add('skill-entry');
-  div.innerHTML = `
-    <input type="text" class="skill-name" placeholder="Skill">
-    <input type="text" class="skill-desc" placeholder="Description of experience">
-  `;
-  skillsSection.appendChild(div);
-});
-
-profileForm.addEventListener('submit', async (e) => {
+document.getElementById("signup-form").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  if (!currentUserId) return;
+  const email = document.getElementById("email").value;
+  const pass = document.getElementById("password").value;
+  const confirm = document.getElementById("confirm").value;
+  const errorMsg = document.getElementById("error-message");
 
-  const profileData = {
-    firstName: document.getElementById('firstName').value,
-    lastName: document.getElementById('lastName').value,
-    location: document.getElementById('location').value || null,
-    bio: document.getElementById('bio').value || null,
-    availability: document.getElementById('availability').value || null,
-    skills: []
-  };
-
-  const skillNames = document.querySelectorAll('.skill-name');
-  const skillDescs = document.querySelectorAll('.skill-desc');
-
-  for (let i = 0; i < skillNames.length; i++) {
-    const name = skillNames[i].value.trim();
-    const desc = skillDescs[i].value.trim();
-    if (name) {
-      profileData.skills.push({ name, description: desc });
-    }
+  if (pass !== confirm) {
+    errorMsg.textContent = "Passwords do not match.";
+    return;
   }
 
   try {
-    await setDoc(doc(db, 'users', currentUserId), profileData);
-    successMsg.textContent = "Profile saved successfully!";
-    errorMsg.textContent = "";
-    setTimeout(() => {
-      window.location.href = "profile.html"; // or wherever your user lands after setup
-    }, 1000);
+    await createUserWithEmailAndPassword(auth, email, pass);
+    window.location.href = "profile-setup.html";
   } catch (err) {
     errorMsg.textContent = err.message;
-    successMsg.textContent = "";
+  }
+});
+
+document.getElementById("google-signin").addEventListener("click", async () => {
+  try {
+    await signInWithPopup(auth, provider);
+    window.location.href = "profile-setup.html";
+  } catch (err) {
+    document.getElementById("error-message").textContent = err.message;
   }
 });

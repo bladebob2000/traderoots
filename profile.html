@@ -1,106 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Profile Card - Wide</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Profile | TradeRoots</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
   <style>
-    .profile-header {
-      background: linear-gradient(to right, #2e7d32, #a1887f);
-      height: 120px;
-      border-top-left-radius: 0.75rem;
-      border-top-right-radius: 0.75rem;
+    body {
+      background: linear-gradient(135deg, #4CAF50, #F0F4C3);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
     }
-    .avatar {
-      width: 80px;
-      height: 80px;
-      border: 4px solid white;
-      border-radius: 50%;
-      background-color: #e0e0e0;
+
+    .profile-container {
+      flex-grow: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 32px;
-      position: absolute;
-      top: 70px;
-      left: 30px;
+      padding: 2rem;
     }
-    .chip {
-      display: inline-block;
-      padding: 0.3rem 0.75rem;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      margin: 2px;
+
+    .card {
+      max-width: 700px;
+      width: 100%;
+      padding: 2rem;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
-    .chip-green {
-      background-color: #d0f0c0;
-      color: #2e7d32;
+
+    .card h2 {
+      color: #198754;
+      margin-bottom: 1rem;
+      text-align: center;
     }
-    .chip-brown {
-      background-color: #e0cfc1;
-      color: #5d4037;
+
+    .skills-scroll {
+      display: flex;
+      overflow-x: auto;
+      gap: 0.75rem;
+      padding-bottom: 1rem;
+    }
+
+    .skills-scroll::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .skills-scroll::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 4px;
+    }
+
+    .skill-btn {
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    footer {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 40px 0;
     }
   </style>
 </head>
-<body class="bg-light">
 
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
-  <div class="card shadow-lg" style="width: 40rem; position: relative;">
-    <div class="profile-header"></div>
-
-    <div class="avatar">👤</div>
-
-    <div class="card-body mt-4 pt-4">
-      <div class="d-flex justify-content-between align-items-start flex-wrap">
-        <div class="flex-grow-1 me-4">
-          <h4 class="card-title">Alex Johnson</h4>
-          <div class="d-flex align-items-center mb-2">
-            <div class="text-warning me-2">★★★★☆</div>
-            <small class="text-muted">(128 reviews)</small>
-          </div>
-          <p class="text-success mb-2">Available Now ●</p>
-        </div>
-        <div>
-          <h6>Skills</h6>
-          <div>
-            <span class="chip chip-green">UI Design</span>
-            <span class="chip chip-green">UX Research</span>
-            <span class="chip chip-green">Prototyping</span>
-            <span class="chip chip-brown">Wireframing</span>
-            <span class="chip chip-brown">User Testing</span>
-          </div>
-        </div>
+<body>
+  <div class="profile-container">
+    <div class="card bg-white">
+      <h2>Welcome, <span id="user-name">User</span>!</h2>
+      <div class="text-end mb-2">
+        <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+          <i class="bi bi-pencil"></i> Edit
+        </button>
       </div>
 
-      <hr>
+      <h5 class="text-muted text-center mb-4">Your Profile</h5>
 
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <h6>Availability</h6>
-          <p class="small text-muted">
-            Mon: 8am–8pm<br>
-            Tue: 5pm–9pm<br>
-            Wed: 5pm–11pm<br>
-            Thu: 6pm–11pm<br>
-            Fri: 6pm–11pm<br>
-            Sat: 9am–8pm<br>
-            Sun: 10am–4pm
-          </p>
-        </div>
-        <div class="col-md-6">
-          <h6>About</h6>
-          <p class="card-text">
-            Experienced designer with a passion for creating intuitive and engaging user experiences. Specialized in mobile app interfaces and design systems with over 5 years of industry experience.
-          </p>
-        </div>
+      <div class="mb-3">
+        <strong>Location:</strong> <span id="user-location">Loading...</span><br />
+        <strong>Bio:</strong>
+        <div id="user-bio" class="mt-1">Loading...</div>
+        <strong>Availability:</strong>
+        <div id="user-availability">Loading...</div>
       </div>
 
-      <a href="chat.html" class="btn btn-success w-100">💬 Message Me</a>
-
+      <h5>Skills</h5>
+      <div class="skills-scroll" id="skills-list">
+        <!-- Skill buttons will be inserted here -->
+      </div>
     </div>
   </div>
-</div>
 
+  <!-- Modal -->
+  <div class="modal fade" id="skillModal" tabindex="-1" aria-labelledby="skillModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="skillModalLabel">Skill</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="skillModalBody">Loading description...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <form class="modal-content" id="edit-profile-form">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProfileLabel">Edit Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body row g-3">
+          <div class="col-md-6">
+            <label class="form-label">First Name</label>
+            <input type="text" id="edit-first" class="form-control" required />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Last Name</label>
+            <input type="text" id="edit-last" class="form-control" required />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Location</label>
+            <input type="text" id="edit-location" class="form-control" />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Bio</label>
+            <textarea id="edit-bio" class="form-control" rows="2"></textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Availability</label>
+            <fieldset class="col-12 border p-3">
+              <legend class="float-none w-auto">Weekly Availability</legend>
+              <div class="row g-2">
+                ${["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(day => `
+                <div class="col-12 d-flex align-items-center">
+                  <input type="checkbox" id="${day}-check" class="form-check-input me-2" />
+                  <label class="form-label me-2" style="width: 80px;">${day}</label>
+                  <input type="time" id="${day}-start" class="form-control me-2" style="width: 140px;" disabled />
+                  <span class="me-2">to</span>
+                  <input type="time" id="${day}-end" class="form-control" style="width: 140px;" disabled />
+                </div>
+                `).join("")}
+              </div>
+            </fieldset>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <div id="footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module">
+    import { auth, db } from './firebase-config.js';
+    import {
+      doc, getDoc, updateDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    const userNameEl = document.getElementById("user-name");
+    const userLocationEl = document.getElementById("user-location");
+    const userBioEl = document.getElementById("user-bio");
+    const userAvailabilityEl = document.getElementById("user-availability");
+    const skillsList = document.getElementById("skills-list");
+
+    const skillModal = new bootstrap.Modal(document.getElementById("skillModal"));
+    const skillModalLabel = document.getElementById("skillModalLabel");
+    const skillModalBody = document.getElementById("skillModalBody");
+
+    const editForm = document.getElementById("edit-profile-form");
+    const editFirst = document.getElementById("edit-first");
+    const editLast = document.getElementById("edit-last");
+    const editLocation = document.getElementById("edit-location");
+    const editBio = document.getElementById("edit-bio");
+    const editAvailability = document.getElementById("edit-availability");
+
+    const availabilityInputs = {};
+
+    ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].forEach(day => {
+      const check = document.getElementById(`${day}-check`);
+      const start = document.getElementById(`${day}-start`);
+      const end = document.getElementById(`${day}-end`);
+
+      availabilityInputs[day] = { check, start, end };
+
+      check.addEventListener("change", () => {
+        const enabled = check.checked;
+        start.disabled = !enabled;
+        end.disabled = !enabled;
+      });
+    });
+
+
+    let currentUserId = null;
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) return (window.location.href = "sign_in.html");
+
+      currentUserId = user.uid;
+      const docRef = doc(db, "users", currentUserId);
+      const userDoc = await getDoc(docRef);
+      if (!userDoc.exists()) return;
+
+      const data = userDoc.data();
+      userNameEl.textContent = `${data.firstName} ${data.lastName}`;
+      userLocationEl.textContent = data.location?.city || data.location || '—';
+      userBioEl.textContent = data.bio || '—';
+      userAvailabilityEl.textContent = data.availability || '—';
+
+      // Fill form
+      editFirst.value = data.firstName || '';
+      editLast.value = data.lastName || '';
+      editLocation.value = data.location?.city || data.location || '';
+      editBio.value = data.bio || '';
+      if (data.availability && typeof data.availability === 'object') {
+        for (const [day, slot] of Object.entries(data.availability)) {
+          const inputs = availabilityInputs[day];
+          if (inputs) {
+            inputs.check.checked = true;
+            inputs.start.disabled = false;
+            inputs.end.disabled = false;
+            inputs.start.value = slot.start || '';
+            inputs.end.value = slot.end || '';
+          }
+        }
+      }
+
+
+      // Skills
+      skillsList.innerHTML = '';
+      if (data.skills?.length) {
+        data.skills.forEach((skill) => {
+          const btn = document.createElement("button");
+          btn.className = "btn btn-outline-success skill-btn";
+          btn.textContent = skill.name;
+          btn.onclick = () => {
+            skillModalLabel.textContent = skill.name;
+            skillModalBody.textContent = skill.description || "No description provided.";
+            skillModal.show();
+          };
+          skillsList.appendChild(btn);
+        });
+      }
+    });
+
+    editForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const updateData = {
+        firstName: editFirst.value.trim(),
+        lastName: editLast.value.trim(),
+        location: editLocation.value.trim(),
+        bio: editBio.value.trim(),
+        availability: Object.fromEntries(
+          Object.entries(availabilityInputs)
+            .filter(([_, { check }]) => check.checked)
+            .map(([day, { start, end }]) => [day, { start: start.value, end: end.value }])
+        )
+
+      };
+
+      try {
+        await updateDoc(doc(db, "users", currentUserId), updateData);
+        location.reload(); // reload page with updated data
+      } catch (err) {
+        alert("Error updating profile: " + err.message);
+      }
+    });
+
+
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(html => (document.getElementById("footer").innerHTML = html));
+
+
+  </script>
 </body>
+
 </html>

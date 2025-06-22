@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up</title>
+</head>
+<body>
+  <h2>Create an Account</h2>
+  <form id="signup-form">
+    <input type="email" id="email" placeholder="Email" required><br>
+    <input type="password" id="password" placeholder="Password" required><br>
+    <input type="password" id="confirm" placeholder="Confirm Password" required><br>
+    <button type="submit">Sign Up</button>
+  </form>
+
+  <button id="google-signin">Sign in with Google</button>
+
+  <p id="error-message" style="color: red;"></p>
+
+  <!-- Firebase + Your JS -->
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="signup.js"></script>
+</body>
+</html>

@@ -147,21 +147,6 @@
     import { doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js';
     import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js';
 
-    document.getElementById("add-skill").addEventListener("click", () => {
-      const section = document.getElementById("skills-section");
-      const div = document.createElement("div");
-      div.className = "skill-entry row g-2 mt-1";
-      div.innerHTML = `
-        <div class="col-md-6">
-          <input type="text" class="form-control skill-name" placeholder="Skill" />
-        </div>
-        <div class="col-md-6">
-          <input type="text" class="form-control skill-desc" placeholder="Description of experience" />
-        </div>
-      `;
-      section.appendChild(div);
-    });
-
     document.getElementById("profile-form").addEventListener("submit", async (e) => {
       e.preventDefault();
 

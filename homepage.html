@@ -6,13 +6,24 @@
   <title>TradeRoots</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Bootstrap CSS -->
+  <!-- Bootstrap & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
     body {
-      background-color: #f5f5f5;
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #4CAF50, #F0F4C3);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-wrapper {
+      flex-grow: 1;
+      padding-bottom: 40px;
     }
 
     .feature-box {
@@ -21,115 +32,125 @@
       padding: 20px;
       text-align: center;
       background-color: white;
+      transition: background-color 0.2s ease;
+    }
+
+    .feature-box:hover {
+      background-color: #f0f0f0;
+      cursor: pointer;
     }
 
     .trade-buttons .btn {
       width: 180px;
     }
 
-    .feature-box {
-      transition: background-color 0.2s ease;
+    .card h6 {
+      margin-bottom: 0.5rem;
     }
-    .feature-box:hover {
-      background-color: #f0f0f0; /* or any hover effect you like */
-      cursor: pointer;
+
+    .badge {
+      margin-right: 0.25rem;
+      margin-bottom: 0.25rem;
     }
-    
+
+    footer {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 40px 0;
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- Navbar/Header -->
+  <!-- Navbar -->
   <div id="navbar"></div>
 
-  <!-- Greeting -->
-  <div class="container my-4">
-    <h2>Hi, Alex!</h2>
-  </div>
-
-  <!-- Trade Buttons -->
-  <div class="container trade-buttons text-center mb-4">
-    <div class="d-flex justify-content-center gap-3">
-      <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#incomingTradesModal">Incoming
-        Trades</button>
-      <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#outgoingTradesModal">Outgoing
-        Trades</button>
+  <div class="content-wrapper">
+    <!-- Greeting -->
+    <div class="container my-4">
+      <h2 id="greeting">Hi there!</h2>
     </div>
-  </div>
 
-  <!-- Feature Icons -->
-  <div class="container mb-5">
-    <div class="row text-center g-3">
-      <div class="col-md-4">
-        <a href="skills_search.html" class="text-decoration-none text-reset">
-          <div class="feature-box">
-            <i class="bi bi-search fs-3"></i>
-            <p class="mt-2">Find Skills</p>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-4">
-        <a href="#" class="text-decoration-none text-reset">
-          <div class="feature-box">
-            <i class="bi bi-people fs-3"></i>
-            <p class="mt-2">Trust Networks</p>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-4">
-        <a href="skill_exchanges.html" class="text-decoration-none text-reset">
-          <div class="feature-box">
-            <i class="bi bi-arrow-left-right fs-3"></i>
-            <p class="mt-2">Exchanges</p>
-          </div>
-        </a>
+    <!-- Trade Buttons -->
+    <div class="container text-center mb-4">
+      <div class="d-flex justify-content-center gap-3">
+        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#incomingTradesModal">Incoming Trades</button>
+        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#outgoingTradesModal">Outgoing Trades</button>
       </div>
     </div>
-  </div>
-  
 
-  <!-- Recommendations -->
-  <div class="container mb-4">
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <h5>Recommended for You</h5>
-        <div class="card">
-          <div class="card-body">
-            <h6 class="card-title">John Doe</h6>
-            <p class="card-text">
-              <span class="badge bg-info">Babysitting</span>
-              <span class="badge bg-info">House Cleaning ⭐⭐⭐</span>
-              <span class="badge bg-info">Baking ⭐⭐⭐</span><br>
-              <small>Requesting: Lawn Mowing</small>
-            </p>
-            <a href="#" class="btn btn-sm btn-primary">See Profile</a>
-          </div>
+    <!-- Features -->
+    <div class="container mb-5">
+      <div class="row text-center g-3">
+        <div class="col-md-4">
+          <a href="skills_search.html" class="text-decoration-none text-reset">
+            <div class="feature-box">
+              <i class="bi bi-search fs-3"></i>
+              <p class="mt-2 mb-0">Find Skills</p>
+            </div>
+          </a>
         </div>
-      </div>
-
-      <div class="col-md-6 mb-3">
-        <h5>Popular</h5>
-        <div class="card">
-          <div class="card-body">
-            <h6 class="card-title">Jane Smith</h6>
-            <p class="card-text">
-              <span class="badge bg-info">Tutoring</span>
-              <span class="badge bg-info">Pet Sitting ⭐⭐</span><br>
-              <small>Requesting: Help with Website</small>
-            </p>
-            <a href="#" class="btn btn-sm btn-primary">See Profile</a>
-          </div>
+        <div class="col-md-4">
+          <a href="#" class="text-decoration-none text-reset">
+            <div class="feature-box">
+              <i class="bi bi-people fs-3"></i>
+              <p class="mt-2 mb-0">Trust Networks</p>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="skill_exchanges.html" class="text-decoration-none text-reset">
+            <div class="feature-box">
+              <i class="bi bi-arrow-left-right fs-3"></i>
+              <p class="mt-2 mb-0">Exchanges</p>
+            </div>
+          </a>
         </div>
       </div>
     </div>
+
+    <!-- Recommendations -->
+    <div class="container mb-4">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <h5>Recommended for You</h5>
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-title">John Doe</h6>
+              <p>
+                <span class="badge bg-info">Babysitting</span>
+                <span class="badge bg-info">House Cleaning ⭐⭐⭐</span>
+                <span class="badge bg-info">Baking ⭐⭐⭐</span><br>
+                <small>Requesting: Lawn Mowing</small>
+              </p>
+              <a href="#" class="btn btn-sm btn-primary">See Profile</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <h5>Popular</h5>
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-title">Jane Smith</h6>
+              <p>
+                <span class="badge bg-info">Tutoring</span>
+                <span class="badge bg-info">Pet Sitting ⭐⭐</span><br>
+                <small>Requesting: Help with Website</small>
+              </p>
+              <a href="#" class="btn btn-sm btn-primary">See Profile</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <!-- Footer -->
   <div id="footer"></div>
 
-  <!-- Incoming Trades Modal -->
-  <div class="modal fade" id="incomingTradesModal" tabindex="-1" aria-labelledby="incomingTradesLabel"
-    aria-hidden="true">
+  <!-- Modals -->
+  <div class="modal fade" id="incomingTradesModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -140,18 +161,8 @@
           <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
-                <strong>@JohnDoe</strong> is requesting <em>Lawn Mowing</em>
-                <br><a href="#">View Profile</a>
-              </div>
-              <div>
-                <button class="btn btn-outline-primary btn-sm me-2">Chat</button>
-                <button class="btn btn-outline-danger btn-sm">Deny</button>
-              </div>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <div>
-                <strong>@LebronJames</strong> is requesting <em>Web Development</em>
-                <br><a href="#">View Profile</a>
+                <strong>@JohnDoe</strong> is requesting <em>Lawn Mowing</em><br>
+                <a href="#">View Profile</a>
               </div>
               <div>
                 <button class="btn btn-outline-primary btn-sm me-2">Chat</button>
@@ -164,9 +175,7 @@
     </div>
   </div>
 
-  <!-- Outgoing Trades Modal -->
-  <div class="modal fade" id="outgoingTradesModal" tabindex="-1" aria-labelledby="outgoingTradesLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="outgoingTradesModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -179,30 +188,90 @@
               You requested <em>Pool Cleaning</em> from <strong>@JohnDoe</strong>
               <button class="btn btn-outline-warning btn-sm">Cancel</button>
             </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              You requested <em>Baby Sitting</em> from <strong>@LebronJames</strong>
-              <button class="btn btn-outline-warning btn-sm">Cancel</button>
-            </li>
           </ul>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Bootstrap JS -->
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module">
+    import { auth, db } from './firebase-config.js';
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  
+    // 🔒 Redirect if not signed in
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "sign_in.html";
+      } else {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          const firstName = userDoc.data().firstName || "there";
+          document.getElementById("greeting").textContent = `Hi, ${firstName}!`;
+        }
+      }
+    });
+  
+    // Inject navbar + add sign out behavior
+    fetch('navbar.html').then(res => res.text()).then(html => {
+      document.getElementById('navbar').innerHTML = html;
+  
+      const signOutBtn = document.getElementById("sign-out");
+      if (signOutBtn) {
+        signOutBtn.addEventListener("click", async () => {
+          await signOut(auth);
+          window.location.href = "sign_in.html";
+        });
+      }
+    });
+  
+    fetch('footer.html').then(res => res.text()).then(html => {
+      document.getElementById('footer').innerHTML = html;
+    });
+  </script>
+  
 
-  <script>
-    fetch('navbar.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar').innerHTML = html;
-      });
-    fetch('footer.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('footer').innerHTML = html;
-      });
+
+  <script type="module">
+    import { auth, db } from './firebase-config.js';
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+
+    // Inject navbar and footer
+    fetch('navbar.html').then(res => res.text()).then(html => {
+      document.getElementById('navbar').innerHTML = html;
+
+      // Add sign-out listener if sign-out button exists
+      const signOutBtn = document.getElementById("sign-out");
+      if (signOutBtn) {
+        signOutBtn.addEventListener("click", async () => {
+          await signOut(auth);
+          window.location.href = "sign_in.html";
+        });
+      }
+    });
+
+    fetch('footer.html').then(res => res.text()).then(html => {
+      document.getElementById('footer').innerHTML = html;
+    });
+
+    const greeting = document.getElementById("greeting");
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          const firstName = userDoc.data().firstName || "there";
+          greeting.textContent = `Hi, ${firstName}!`;
+        }
+      } else {
+        greeting.textContent = "Hi there!";
+      }
+    });
   </script>
 
 </body>

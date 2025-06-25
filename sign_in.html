@@ -124,11 +124,15 @@
 
   <!-- Firebase & Auth Logic -->
   <script type="module">
-    import { auth, provider } from './firebase-config.js';
+    import { auth, provider, db } from './firebase-config.js';
     import {
       signInWithEmailAndPassword,
       signInWithPopup
     } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import {
+      doc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     document.getElementById("signin-form").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -136,8 +140,10 @@
       const password = document.getElementById("password").value;
 
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "profile.html";
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const uid = userCredential.user.uid;
+        const userDoc = await getDoc(doc(db, "users", uid));
+        window.location.href = userDoc.exists() ? "profile.html" : "profile-setup.html";
       } catch (err) {
         alert("Error signing in: " + err.message);
       }
@@ -145,12 +151,15 @@
 
     document.getElementById("googleSignIn").addEventListener("click", async () => {
       try {
-        await signInWithPopup(auth, provider);
-        window.location.href = "profile.html";
+        const result = await signInWithPopup(auth, provider);
+        const uid = result.user.uid;
+        const userDoc = await getDoc(doc(db, "users", uid));
+        window.location.href = userDoc.exists() ? "profile.html" : "profile-setup.html";
       } catch (err) {
         alert("Google sign-in error: " + err.message);
       }
     });
+
   </script>
 
 </body>

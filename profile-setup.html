@@ -96,9 +96,17 @@
           <input type="text" class="form-control" id="lastName" required />
         </div>
         <div class="mb-3">
-          <label for="location" class="form-label">Location (optional)</label>
+          <label for="location" class="form-label">
+            Location (optional)
+            <i class="bi bi-info-circle-fill text-secondary ms-1" 
+               data-bs-toggle="tooltip" 
+               data-bs-placement="right" 
+               title="Don’t worry—your location is never shared with others. It’s only used to help connect you with nearby users and ensure your time zone is accurate for smoother scheduling.">
+            </i>
+          </label>
           <input type="text" class="form-control" id="location" />
         </div>
+        
         <div class="mb-3">
           <label for="bio" class="form-label">Short Bio (optional)</label>
           <textarea class="form-control" id="bio" rows="2"></textarea>
@@ -226,6 +234,16 @@
         document.getElementById('footer').innerHTML = html;
       });
   </script>
+  <script>
+    // Initialize all Bootstrap tooltips
+    document.addEventListener("DOMContentLoaded", function () {
+      const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+        new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+    });
+  </script>
+  
 </body>
 
 </html>

@@ -9,6 +9,62 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
+const skillOptions = [
+  "Lawn Mowing", "Leaf Raking", "Edging Lawns", "Weeding Gardens", "Watering Plants", "Planting Flowers",
+  "Shrub Trimming", "Tree Pruning", "Composting", "Mulching", "Snow Shoveling", "Salting Sidewalks",
+  "Pool Cleaning", "Pool Chemical Balancing", "Skimming Leaves", "Refilling Water Levels",
+  "Dog Walking", "Dog Bathing", "Pet Sitting", "Pet Feeding", "Pet Waste Cleanup",
+  "Cat Sitting", "Aquarium Cleaning", "Bird Cage Cleaning", "Pet Medication Administration",
+  "Baby Sitting", "Toddler Care", "Infant Feeding", "Story Time for Kids", "Play Supervision", "Diaper Changing",
+  "Homework Help", "Math Tutoring", "Reading Tutoring", "Science Tutoring", "History Tutoring", "SAT Prep", "ACT Prep",
+  "Essay Editing", "College App Coaching", "Music Lessons", "Piano Lessons", "Guitar Lessons", "Drum Lessons",
+  "Language Tutoring", "Spanish Tutoring", "French Tutoring", "Mandarin Tutoring",
+  "Senior Care", "Errands for Seniors", "Medicine Pickup", "Grocery Pickup", "Meal Prep for Elderly",
+  "Companionship Visits", "Technology Help for Seniors", "Phone Setup", "TV Remote Help",
+  "TV Mounting", "Cable Management", "Wiring Setup", "Router Setup", "Wi-Fi Troubleshooting", "Printer Setup",
+  "Computer Cleanup", "Virus Removal", "App Installation", "Phone Backup Help",
+  "Furniture Assembly", "Shelf Installation", "Curtain Hanging", "Picture Hanging",
+  "Closet Organization", "Garage Cleaning", "Attic Cleaning", "Decluttering",
+  "Moving Help", "Packing Help", "Unpacking Help", "Box Labeling", "Truck Loading", "Furniture Lifting",
+  "Recycling Dropoff", "Donation Runs", "Trash Takeout", "Junk Removal",
+  "Car Washing", "Car Vacuuming", "Bike Repair", "Bike Tire Pumping",
+  "Grocery Shopping", "Personal Shopping", "Return Items to Stores",
+  "Mail Pickup", "Package Dropoff", "Dry Cleaning Dropoff", "Laundry Folding",
+  "Laundry Washing", "Ironing Clothes", "Closet Folding", "Shoe Cleaning",
+  "Window Washing", "Mirror Cleaning", "Dusting", "Vacuuming", "Mopping Floors",
+  "Dishwashing", "Fridge Cleaning", "Microwave Cleaning", "Oven Cleaning", "Countertop Wiping",
+  "Meal Prep", "Simple Cooking", "BBQ Grilling", "Lunchbox Packing", "Smoothie Making",
+  "Hosting Help", "Serving at Events", "Party Cleanup", "Event Setup", "Decorating for Events",
+  "Balloon Setup", "Table Arrangement", "Chair Setup", "Audio Equipment Setup",
+  "Face Painting", "Balloon Animals", "Party Games", "Supervising Kids at Events",
+  "Social Media Help", "Instagram Reels Help", "TikTok Setup", "YouTube Editing", "Basic Video Editing",
+  "Basic Graphic Design", "Flyer Design", "Poster Printing", "Resume Formatting",
+  "Job Application Help", "Email Writing Help", "College Essay Editing", "Scholarship Search Help",
+  "Babysitter CPR Certified", "First Aid Certified", "Lifeguard Certified", "Driver with Car",
+  "Reliable Bike Transport", "Pet-Friendly Home", "Quiet Homework Environment",
+  "Early Morning Availability", "Evening Availability", "Weekend Availability",
+  "Summer Availability", "After School Availability",
+  "Event Photography", "Photo Editing", "Video Recording", "Zoom Setup", "PowerPoint Help",
+  "Google Docs Help", "Google Slides Help", "Microsoft Word Help", "Spreadsheet Help",
+  "Crafting Help", "Knitting", "Sewing Buttons", "Simple Hemming", "Costume Making",
+  "Holiday Decorating", "Gift Wrapping", "Card Writing", "Care Package Packing",
+  "Chalk Art", "Sign Holding", "Fundraiser Volunteering", "Community Cleanups", "Pet Adoption Events",
+  "Farmers Market Setup", "Booth Sitting", "Flyer Distribution", "Door Hanger Placement",
+  "Yard Sale Setup", "Yard Sale Pricing", "Yard Sale Advertising",
+  "Children's Book Reading", "Art Lessons", "Origami Teaching", "Lego Building Supervision",
+  "Board Game Playing", "Chess Tutoring", "Scrabble Competitions", "Cooking with Kids",
+  "Bike Safety Lessons", "Fire Safety Drills", "Neighborhood Watch Help", "Pet Rescue Networking"
+];
+
+const datalist = document.createElement("datalist");
+datalist.id = "skills-datalist";
+skillOptions.forEach(skill => {
+  const opt = document.createElement("option");
+  opt.value = skill;
+  datalist.appendChild(opt);
+});
+document.body.appendChild(datalist);
+
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 const userNameEl = document.getElementById("user-name");
 const userLocationEl = document.getElementById("user-location");
@@ -32,10 +88,8 @@ const skillModalLabel = document.getElementById("skillModalLabel");
 const skillModalBody = document.getElementById("skillModalBody");
 
 const availabilityInputs = {};
-
 let currentUserId = null;
 
-// Dynamically generate availability input rows
 function buildAvailabilityUI() {
   DAYS.forEach(day => {
     const row = document.createElement("div");
@@ -51,14 +105,12 @@ function buildAvailabilityUI() {
   });
 }
 
-// Event listeners for enabling/disabling time inputs
 function setupAvailabilityEvents() {
   DAYS.forEach(day => {
     const check = document.getElementById(`${day}-check`);
     const start = document.getElementById(`${day}-start`);
     const end = document.getElementById(`${day}-end`);
     availabilityInputs[day] = { check, start, end };
-
     check.addEventListener("change", () => {
       const enabled = check.checked;
       start.disabled = !enabled;
@@ -67,13 +119,13 @@ function setupAvailabilityEvents() {
   });
 }
 
-// Create skill input row
 function createSkillInput(skill = { name: "", description: "" }) {
   const row = document.createElement("div");
-  row.className = "row g-2 align-items-center mb-2";
+  row.className = "row g-2 align-items-center mb-2 position-relative";
   row.innerHTML = `
-    <div class="col-md-5">
-      <input type="text" class="form-control" placeholder="Skill name" value="${skill.name || ''}" />
+    <div class="col-md-5 position-relative">
+      <input type="text" class="form-control skill-input" placeholder="Skill name" value="${skill.name || ''}" autocomplete="off" />
+      <div class="autocomplete-list"></div>
     </div>
     <div class="col-md-6">
       <input type="text" class="form-control" placeholder="Description" value="${skill.description || ''}" />
@@ -84,15 +136,16 @@ function createSkillInput(skill = { name: "", description: "" }) {
   `;
   row.querySelector("button").onclick = () => row.remove();
   skillsContainer.appendChild(row);
+  setupSkillAutocomplete(row);
 }
 
-// Create requested skill input row
 function createRequestedSkillInput(skill = { name: "", description: "" }) {
   const row = document.createElement("div");
-  row.className = "row g-2 align-items-center mb-2";
+  row.className = "row g-2 align-items-center mb-2 position-relative";
   row.innerHTML = `
-    <div class="col-md-5">
-      <input type="text" class="form-control" placeholder="Requested skill name" value="${skill.name || ''}" />
+    <div class="col-md-5 position-relative">
+      <input type="text" class="form-control skill-input" placeholder="Requested skill name" value="${skill.name || ''}" autocomplete="off" />
+      <div class="autocomplete-list"></div>
     </div>
     <div class="col-md-6">
       <input type="text" class="form-control" placeholder="Description" value="${skill.description || ''}" />
@@ -103,9 +156,10 @@ function createRequestedSkillInput(skill = { name: "", description: "" }) {
   `;
   row.querySelector("button").onclick = () => row.remove();
   requestedSkillsContainer.appendChild(row);
+  setupSkillAutocomplete(row);
 }
 
-// Format 24hr to AM/PM
+
 function formatTime(t) {
   if (!t) return "--";
   const [h, m] = t.split(":").map(Number);
@@ -144,7 +198,6 @@ onAuthStateChanged(auth, async (user) => {
 
   skillsContainer.innerHTML = '';
   (data.skills || []).forEach(skill => createSkillInput(skill));
-
   requestedSkillsContainer.innerHTML = '';
   (data.requestedSkills || []).forEach(skill => createRequestedSkillInput(skill));
 
@@ -178,21 +231,44 @@ onAuthStateChanged(auth, async (user) => {
 editForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const skills = Array.from(skillsContainer.querySelectorAll(".row")).map(row => {
-    const inputs = row.querySelectorAll("input");
-    return {
-      name: inputs[0].value.trim(),
-      description: inputs[1].value.trim()
-    };
-  }).filter(skill => skill.name);
+  const skills = [];
+  const requestedSkills = [];
+  let skillError = false;
 
-  const requestedSkills = Array.from(requestedSkillsContainer.querySelectorAll(".row")).map(row => {
-    const inputs = row.querySelectorAll("input");
-    return {
-      name: inputs[0].value.trim(),
-      description: inputs[1].value.trim()
-    };
-  }).filter(skill => skill.name);
+  skillsContainer.querySelectorAll(".row").forEach(row => {
+    const [nameInput, descInput] = row.querySelectorAll("input");
+    const name = nameInput.value.trim();
+    const description = descInput.value.trim();
+    if (name) {
+      if (!skillOptions.includes(name)) {
+        skillError = true;
+        nameInput.classList.add("is-invalid");
+      } else {
+        nameInput.classList.remove("is-invalid");
+        skills.push({ name, description });
+      }
+    }
+  });
+
+  requestedSkillsContainer.querySelectorAll(".row").forEach(row => {
+    const [nameInput, descInput] = row.querySelectorAll("input");
+    const name = nameInput.value.trim();
+    const description = descInput.value.trim();
+    if (name) {
+      if (!skillOptions.includes(name)) {
+        skillError = true;
+        nameInput.classList.add("is-invalid");
+      } else {
+        nameInput.classList.remove("is-invalid");
+        requestedSkills.push({ name, description });
+      }
+    }
+  });
+
+  if (skillError) {
+    alert("Please select skill names from the list.");
+    return;
+  }
 
   const availability = {};
   for (const [day, { check, start, end }] of Object.entries(availabilityInputs)) {
@@ -219,7 +295,6 @@ editForm.addEventListener("submit", async (e) => {
   }
 });
 
-// Navbar and footer
 fetch('navbar.html')
   .then(res => res.text())
   .then(html => document.getElementById('navbar').innerHTML = html);
@@ -231,7 +306,6 @@ fetch("footer.html")
     initAutocomplete();
   });
 
-// Google Autocomplete setup
 window.initAutocomplete = () => {
   const input = document.getElementById("edit-location");
   if (!input || typeof google === 'undefined' || !google.maps?.places) {
@@ -251,7 +325,6 @@ window.initAutocomplete = () => {
       const city = cityComponent?.long_name || place.formatted_address;
       input.value = city;
       window.locationPlaceSelected = true;
-
     }
   });
 
@@ -260,20 +333,48 @@ window.initAutocomplete = () => {
   });
 };
 
-
 document.addEventListener("DOMContentLoaded", () => {
   buildAvailabilityUI();
   setupAvailabilityEvents();
-
-  // Attach button handlers
   addSkillBtn.addEventListener("click", () => createSkillInput());
   addRequestedSkillBtn.addEventListener("click", () => createRequestedSkillInput());
 });
 
-// Initialize Google Places *after* modal becomes visible
 const editModal = document.getElementById("editProfileModal");
 if (editModal) {
   editModal.addEventListener("shown.bs.modal", () => {
-    setTimeout(() => initAutocomplete(), 100); // slight delay ensures input is fully visible
+    setTimeout(() => initAutocomplete(), 100);
+  });
+}
+
+function setupSkillAutocomplete(row) {
+  const input = row.querySelector(".skill-input");
+  const list = row.querySelector(".autocomplete-list");
+
+  input.addEventListener("input", () => {
+    const query = input.value.toLowerCase().trim();
+    list.innerHTML = "";
+
+    if (!query) return;
+
+    const matches = skillOptions
+      .filter(skill => skill.toLowerCase().includes(query))
+      .sort((a, b) => a.toLowerCase().indexOf(query) - b.toLowerCase().indexOf(query))
+      .slice(0, 5);
+
+    matches.forEach(skill => {
+      const item = document.createElement("div");
+      item.className = "autocomplete-item";
+      item.textContent = skill;
+      item.onclick = () => {
+        input.value = skill;
+        list.innerHTML = "";
+      };
+      list.appendChild(item);
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!row.contains(e.target)) list.innerHTML = "";
   });
 }

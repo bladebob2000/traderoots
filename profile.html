@@ -9,9 +9,7 @@
   <!-- Bootstrap & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjxczL7HTc0-nr0DqFnByIrjruhE5ti6A&libraries=places"></script>
-
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjxczL7HTc0-nr0DqFnByIrjruhE5ti6A&libraries=places"></script>
 
   <style>
     body {
@@ -75,7 +73,6 @@
 </head>
 
 <body>
-
   <div id="navbar"></div>
 
   <div class="profile-container">
@@ -102,16 +99,15 @@
         </div>
       </div>
 
-
       <h5>Skills</h5>
-      <div class="skills-scroll" id="skills-list">
-        <!-- Skill buttons will be inserted here -->
-      </div>
+      <div class="skills-scroll" id="skills-list"></div>
+
+      <h5 class="mt-4">Requested Skills</h5>
+      <div class="skills-scroll" id="requested-skills-list"></div>
     </div>
   </div>
 
-  <!-- Modal for Skill Info -->
-  <div class="modal fade" id="skillModal" tabindex="-1" aria-labelledby="skillModalLabel" aria-hidden="true">
+  <div id="skillModal" class="modal fade" tabindex="-1" aria-labelledby="skillModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -123,8 +119,7 @@
     </div>
   </div>
 
-  <!-- Edit Profile Modal -->
-  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
+  <div id="editProfileModal" class="modal fade" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <form class="modal-content" id="edit-profile-form">
         <div class="modal-header">
@@ -152,81 +147,23 @@
             <label class="form-label">Availability</label>
             <fieldset class="col-12 border p-3">
               <legend class="float-none w-auto">Weekly Availability</legend>
-              <div class="row g-2" style="max-height: 250px; overflow-y: auto;">
-                <!-- Monday -->
-                <div class="col-12 d-flex align-items-center">
-                  <input type="checkbox" id="Monday-check" class="form-check-input me-2" />
-                  <label class="form-label me-2" style="width: 80px;">Monday</label>
-                  <input type="time" id="Monday-start" class="form-control me-2" style="width: 140px;" disabled />
-                  <span class="me-2">to</span>
-                  <input type="time" id="Monday-end" class="form-control" style="width: 140px;" disabled />
-                </div>
-
-                <!-- Tuesday -->
-                <div class="col-12 d-flex align-items-center">
-                  <input type="checkbox" id="Tuesday-check" class="form-check-input me-2" />
-                  <label class="form-label me-2" style="width: 80px;">Tuesday</label>
-                  <input type="time" id="Tuesday-start" class="form-control me-2" style="width: 140px;" disabled />
-                  <span class="me-2">to</span>
-                  <input type="time" id="Tuesday-end" class="form-control" style="width: 140px;" disabled />
-                </div>
-
-                <!-- Wednesday -->
-                <div class="col-12 d-flex align-items-center">
-                  <input type="checkbox" id="Wednesday-check" class="form-check-input me-2" />
-                  <label class="form-label me-2" style="width: 80px;">Wednesday</label>
-                  <input type="time" id="Wednesday-start" class="form-control me-2" style="width: 140px;" disabled />
-                  <span class="me-2">to</span>
-                  <input type="time" id="Wednesday-end" class="form-control" style="width: 140px;" disabled />
-                </div>
-
-                <!-- Thursday -->
-                <div class="col-12 d-flex align-items-center">
-                  <input type="checkbox" id="Thursday-check" class="form-check-input me-2" />
-                  <label class="form-label me-2" style="width: 80px;">Thursday</label>
-                  <input type="time" id="Thursday-start" class="form-control me-2" style="width: 140px;" disabled />
-                  <span class="me-2">to</span>
-                  <input type="time" id="Thursday-end" class="form-control" style="width: 140px;" disabled />
-                </div>
-
-                <!-- Friday -->
-                <div class="col-12 d-flex align-items-center">
-                  <input type="checkbox" id="Friday-check" class="form-check-input me-2" />
-                  <label class="form-label me-2" style="width: 80px;">Friday</label>
-                  <input type="time" id="Friday-start" class="form-control me-2" style="width: 140px;" disabled />
-                  <span class="me-2">to</span>
-                  <input type="time" id="Friday-end" class="form-control" style="width: 140px;" disabled />
-                </div>
-
-                <!-- Saturday -->
-                <div class="col-12 d-flex align-items-center">
-                  <input type="checkbox" id="Saturday-check" class="form-check-input me-2" />
-                  <label class="form-label me-2" style="width: 80px;">Saturday</label>
-                  <input type="time" id="Saturday-start" class="form-control me-2" style="width: 140px;" disabled />
-                  <span class="me-2">to</span>
-                  <input type="time" id="Saturday-end" class="form-control" style="width: 140px;" disabled />
-                </div>
-
-                <!-- Sunday -->
-                <div class="col-12 d-flex align-items-center">
-                  <input type="checkbox" id="Sunday-check" class="form-check-input me-2" />
-                  <label class="form-label me-2" style="width: 80px;">Sunday</label>
-                  <input type="time" id="Sunday-start" class="form-control me-2" style="width: 140px;" disabled />
-                  <span class="me-2">to</span>
-                  <input type="time" id="Sunday-end" class="form-control" style="width: 140px;" disabled />
-                </div>
+              <div class="row g-2" id="availability-fields" style="max-height: 250px; overflow-y: auto;">
+                <!-- Availability checkboxes and times will be generated by JS -->
               </div>
-
             </fieldset>
           </div>
-          <!-- Skills Editor Section -->
           <div class="col-12">
             <label class="form-label">Skills</label>
-            <div id="skills-container">
-              <!-- Dynamic rows will go here -->
-            </div>
+            <div id="skills-container"></div>
             <button type="button" class="btn btn-sm btn-outline-success mt-2" id="add-skill-btn">
               <i class="bi bi-plus-circle"></i> Add New Skill
+            </button>
+          </div>
+          <div class="col-12 mt-3">
+            <label class="form-label">Requested Skills</label>
+            <div id="requested-skills-container"></div>
+            <button type="button" class="btn btn-sm btn-outline-success mt-2" id="add-requested-skill-btn">
+              <i class="bi bi-plus-circle"></i> Add Requested Skill
             </button>
           </div>
         </div>
@@ -235,233 +172,13 @@
         </div>
       </form>
     </div>
-
   </div>
 
   <div id="footer"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="firebase-config.js"></script>
-  <script type="module">
-    import { auth, db } from './firebase-config.js';
-    import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-    const userNameEl = document.getElementById("user-name");
-    const userLocationEl = document.getElementById("user-location");
-    const userBioEl = document.getElementById("user-bio");
-    const userAvailabilityEl = document.getElementById("user-availability");
-    const skillsList = document.getElementById("skills-list");
-
-    const skillModal = new bootstrap.Modal(document.getElementById("skillModal"));
-    const skillModalLabel = document.getElementById("skillModalLabel");
-    const skillModalBody = document.getElementById("skillModalBody");
-
-    const editForm = document.getElementById("edit-profile-form");
-    const editFirst = document.getElementById("edit-first");
-    const editLast = document.getElementById("edit-last");
-    const editLocation = document.getElementById("edit-location");
-    const editBio = document.getElementById("edit-bio");
-
-    const availabilityInputs = {};
-
-    const skillsContainer = document.getElementById("skills-container");
-    const addSkillBtn = document.getElementById("add-skill-btn");
-
-    function createSkillInput(skill = { name: "", description: "" }) {
-      const row = document.createElement("div");
-      row.className = "row g-2 align-items-center mb-2";
-
-      const nameCol = document.createElement("div");
-      nameCol.className = "col-md-5";
-      const nameInput = document.createElement("input");
-      nameInput.type = "text";
-      nameInput.placeholder = "Skill name";
-      nameInput.className = "form-control";
-      nameInput.value = skill.name || "";
-      nameCol.appendChild(nameInput);
-
-      const descCol = document.createElement("div");
-      descCol.className = "col-md-6";
-      const descInput = document.createElement("input");
-      descInput.type = "text";
-      descInput.placeholder = "Description";
-      descInput.className = "form-control";
-      descInput.value = skill.description || "";
-      descCol.appendChild(descInput);
-
-      const delCol = document.createElement("div");
-      delCol.className = "col-md-1 text-end";
-      const delBtn = document.createElement("button");
-      delBtn.type = "button";
-      delBtn.className = "btn btn-sm btn-outline-danger";
-      delBtn.innerHTML = '<i class="bi bi-x-circle"></i>';
-      delBtn.onclick = () => row.remove();
-      delCol.appendChild(delBtn);
-
-      row.appendChild(nameCol);
-      row.appendChild(descCol);
-      row.appendChild(delCol);
-      skillsContainer.appendChild(row);
-    }
-
-    addSkillBtn.addEventListener("click", () => createSkillInput());
-
-
-    document.getElementById('editProfileModal').addEventListener('shown.bs.modal', () => {
-      ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].forEach(day => {
-        const check = document.getElementById(`${day}-check`);
-        const start = document.getElementById(`${day}-start`);
-        const end = document.getElementById(`${day}-end`);
-        if (check && start && end) {
-          availabilityInputs[day] = { check, start, end };
-          check.addEventListener("change", () => {
-            const enabled = check.checked;
-            start.disabled = !enabled;
-            end.disabled = !enabled;
-          });
-        }
-      });
-    });
-
-    let currentUserId = null;
-
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) return (window.location.href = "sign_in.html");
-
-      currentUserId = user.uid;
-      const docRef = doc(db, "users", currentUserId);
-      const userDoc = await getDoc(docRef);
-      if (!userDoc.exists()) return;
-
-      const data = userDoc.data();
-      userNameEl.textContent = `${data.firstName} ${data.lastName}`;
-      userLocationEl.textContent = data.location?.city || data.location || '—';
-      userBioEl.textContent = data.bio || '—';
-
-      const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      if (data.availability && typeof data.availability === 'object') {
-        const readable = weekDays.map(day => {
-          if (data.availability[day]) {
-            const { start, end } = data.availability[day];
-            return `${day}: ${formatTime(start)} - ${formatTime(end)}`;
-          } else {
-            return `${day}: Unable`;
-          }
-        });
-        userAvailabilityEl.innerHTML = readable.join("<br>");
-      } else {
-        userAvailabilityEl.innerHTML = weekDays.map(day => `${day.toLowerCase()}: unable`).join("<br>");
-      }
-
-      // Helper to format 24hr time to 12hr AM/PM
-      function formatTime(t) {
-        if (!t) return "--";
-        const [h, m] = t.split(":").map(Number);
-        const suffix = h >= 12 ? "PM" : "AM";
-        const hour = h % 12 || 12;
-        return `${hour}:${m.toString().padStart(2, "0")}${suffix}`;
-      }
-
-
-      editFirst.value = data.firstName || '';
-      editLast.value = data.lastName || '';
-      editLocation.value = data.location?.city || data.location || '';
-      editBio.value = data.bio || '';
-
-      // Load skills into edit modal
-      skillsContainer.innerHTML = '';
-      if (Array.isArray(data.skills)) {
-        data.skills.forEach(skill => createSkillInput(skill));
-      }
-
-
-      // Skills
-      skillsList.innerHTML = '';
-      if (data.skills?.length) {
-        data.skills.forEach((skill) => {
-          const btn = document.createElement("button");
-          btn.className = "btn btn-outline-success skill-btn";
-          btn.textContent = skill.name;
-          btn.onclick = () => {
-            skillModalLabel.textContent = skill.name;
-            skillModalBody.textContent = skill.description || "No description provided.";
-            skillModal.show();
-          };
-          skillsList.appendChild(btn);
-        });
-      }
-    });
-
-    editForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      // 🔧 Define skills before using it in updateData
-      const skillInputs = skillsContainer.querySelectorAll(".row");
-      const skills = Array.from(skillInputs).map(row => {
-        const name = row.querySelector("input[placeholder='Skill name']").value.trim();
-        const description = row.querySelector("input[placeholder='Description']").value.trim();
-        return name ? { name, description } : null;
-      }).filter(Boolean);
-
-      const updateData = {
-        firstName: editFirst.value.trim(),
-        lastName: editLast.value.trim(),
-        location: editLocation.value.trim(),
-        bio: editBio.value.trim(),
-        availability: Object.fromEntries(
-          Object.entries(availabilityInputs)
-            .filter(([_, { check }]) => check.checked)
-            .map(([day, { start, end }]) => [day, { start: start.value, end: end.value }])
-        ),
-        skills // ✅ Now this works
-      };
-
-      try {
-        await updateDoc(doc(db, "users", currentUserId), updateData);
-        location.reload();
-      } catch (err) {
-        alert("Error updating profile: " + err.message);
-      }
-    });
-
-
-    fetch('navbar.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar').innerHTML = html;
-      });
-
-    // Load footer and initialize Google Places Autocomplete
-    fetch("footer.html")
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById("footer").innerHTML = html;
-        initAutocomplete(); // Initialize Google Autocomplete after footer is loaded
-      });
-
-      window.initAutocomplete = () => {
-        const input = document.getElementById("edit-location");
-        if (input && typeof google !== 'undefined') {
-          const autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'] });
-          autocomplete.setFields(['address_components', 'geometry', 'formatted_address']);
-      
-          autocomplete.addListener("place_changed", () => {
-            const place = autocomplete.getPlace();
-            if (place && place.formatted_address) {
-              input.value = place.formatted_address;
-              window.locationPlaceSelected = true;
-            }
-          });
-      
-          input.addEventListener("input", () => {
-            window.locationPlaceSelected = false;
-          });
-        }
-      };
-      
-
-  </script>
+  <script type="module" src="profile.js"></script>
 </body>
 
 </html>

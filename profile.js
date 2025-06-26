@@ -114,14 +114,6 @@ function formatTime(t) {
   return `${hour}:${m.toString().padStart(2, "0")}${suffix}`;
 }
 
-// Init
-buildAvailabilityUI();
-setupAvailabilityEvents();
-
-// Button listeners
-addSkillBtn.addEventListener("click", () => createSkillInput());
-addRequestedSkillBtn.addEventListener("click", () => createRequestedSkillInput());
-
 onAuthStateChanged(auth, async (user) => {
   if (!user) return window.location.href = "sign_in.html";
 
@@ -242,18 +234,46 @@ fetch("footer.html")
 // Google Autocomplete setup
 window.initAutocomplete = () => {
   const input = document.getElementById("edit-location");
-  if (input && typeof google !== 'undefined') {
-    const autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'] });
-    autocomplete.setFields(['address_components', 'geometry', 'formatted_address']);
-    autocomplete.addListener("place_changed", () => {
-      const place = autocomplete.getPlace();
-      if (place && place.formatted_address) {
-        input.value = place.formatted_address;
-        window.locationPlaceSelected = true;
-      }
-    });
-    input.addEventListener("input", () => {
-      window.locationPlaceSelected = false;
-    });
+  if (!input || typeof google === 'undefined' || !google.maps?.places) {
+    console.warn("Google Places API not ready or #edit-location not found");
+    return;
   }
+
+  const autocomplete = new google.maps.places.Autocomplete(input, {
+    types: ['(cities)'],
+    fields: ['address_components', 'formatted_address', 'geometry']
+  });
+
+  autocomplete.addListener("place_changed", () => {
+    const place = autocomplete.getPlace();
+    if (place?.formatted_address) {
+      const cityComponent = place.address_components?.find(c => c.types.includes("locality"));
+      const city = cityComponent?.long_name || place.formatted_address;
+      input.value = city;
+      window.locationPlaceSelected = true;
+
+    }
+  });
+
+  input.addEventListener("input", () => {
+    window.locationPlaceSelected = false;
+  });
 };
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  buildAvailabilityUI();
+  setupAvailabilityEvents();
+
+  // Attach button handlers
+  addSkillBtn.addEventListener("click", () => createSkillInput());
+  addRequestedSkillBtn.addEventListener("click", () => createRequestedSkillInput());
+});
+
+// Initialize Google Places *after* modal becomes visible
+const editModal = document.getElementById("editProfileModal");
+if (editModal) {
+  editModal.addEventListener("shown.bs.modal", () => {
+    setTimeout(() => initAutocomplete(), 100); // slight delay ensures input is fully visible
+  });
+}
